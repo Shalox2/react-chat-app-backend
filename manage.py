@@ -6,7 +6,9 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chat_api.settings')
+    setting_module = "chat_api.deployment" if "RENDER_EXTERNALHOSTNAME" in os.environ else "chat_api.settings"
+
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', setting_module)
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

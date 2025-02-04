@@ -1,0 +1,3 @@
+
+web: gunicorn chat_api.wsgi --log-file
+web: python manage.py migrate && gunicorn chat_api.wsgi
