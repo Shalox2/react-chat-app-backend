@@ -3,7 +3,7 @@ from .settings import *
 from .settings import BASE_DIR
 
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
-CSRF_TRUSTED_ORIGINS = ['HTTPS://'+os.environ['WEBSITE_HOSTNAME']]
+CSRF_TRUSTED_ORIGINS = ['https://'+os.environ['WEBSITE_HOSTNAME']]
 
 DEBUG = False
 SECRET_KEY = os.environ['SECRET_KEY']
@@ -21,11 +21,26 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
+CONNECTION = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
+CONNECTION_SIR ={pair.split('=')[0]:pair.split('=')[1] for pair in CONNECTION.split('')}
 
-CORS_ALLOWED_ORIGINS = [
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": CONNECTION_SIR["mydatabase"],
+        "HOST": CONNECTION_SIR['use'],
+        "USER":CONNECTION_SIR ["mydatabase"],
+        "PASSWORD":CONNECTION_SIR ["mypassword"],
+        
+        
+    }
+}
+SECRET_KEY = os.environ['MY SECRET_KEY']
+#CORS_ALLOWED_ORIGINS = [
     # "http://localhost:3000",  
     # "http://127.0.0.1:3000",
-]
+#]
 
 STORAGES = {
     "default": {
@@ -38,15 +53,7 @@ STORAGES = {
 
 
 
-DATABASES = {
-    'default' : dj_database_url.config(
 
-        #replace the value with ur local database connection string
-        default = os.environ["DATABASE_URL"],
-        conn_max_age = 600
-    )
-        
-}
 
 
 STATIC_ROOT =  BASE_DIR / 'staticfiles'

@@ -6,7 +6,7 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    setting_module = "chat_api.deployment" if "RENDER_EXTERNALHOSTNAME" in os.environ else "chat_api.settings"
+    setting_module = "chat_api.deployment" if "WEBSITE_HOSTNAME"  in os.environ else "chat_api.settings"
 
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', setting_module)
     try:
